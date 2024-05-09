@@ -1,0 +1,2 @@
+# youtube_live_damper
+cronで実行し、YoutubeLiveの配信状況をJsonとしてダンプするプログラムのリポジトリです。
