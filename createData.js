@@ -33,7 +33,10 @@ const getDetail = async channelTag => {
   const creators = createCreators();
   const creator = creators.find(c => c.channelTag === channelTag);
 
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({
+    headless: true, 
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+  });
   const page = await browser.newPage();
   await page.setViewport({ width: 1280, height: 3000 });
 
