@@ -29,19 +29,10 @@ const getContents = async (page, channelTag) => {
 };
 
 // メイン処理
-const getDetail = async channelTag => {
-  const creators = createCreators();
-  const creator = creators.find(c => c.channelTag === channelTag);
-
-  const browser = await puppeteer.launch({
-    headless: true, 
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
-  });
-  const page = await browser.newPage();
-  await page.setViewport({ width: 1280, height: 3000 });
+const getDetail = async (page, creator) => {
+  const channelTag = creator.channelTag;
 
   const videoIds = await getContents(page, channelTag);
-  await browser.close();
 
   const youtube = await Innertube.create();
 
@@ -89,9 +80,23 @@ const getDetail = async channelTag => {
 
 // 実行部分
 (async () => {
-  const channelTag = process.argv[2];
-  const data = await getDetail(channelTag);
+  const tags = [process.argv[2], process.argv[3]];
+  const list = createCreators();
 
-  const json = JSON.stringify(data, null, 2);
-  fs.writeFileSync(`./data/${channelTag}.json`, json);
+  const creators = list.filter(l => tags.every(item => l.tag.includes(item)));
+  console.log(creators);
+  const browser = await puppeteer.launch({
+    headless: true, 
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+  });
+  const page = await browser.newPage();
+  await page.setViewport({ width: 1280, height: 3000 });
+
+  for (const creator of creators) {
+    const data = await getDetail(page, creator);
+    const json = JSON.stringify(data, null, 2);
+    fs.writeFileSync(`./data/${creator.channelTag}.json`, json);
+  }
+
+  await browser.close();
 })();
