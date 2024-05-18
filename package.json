@@ -1,7 +1,7 @@
 {
-  "name": "youtubetest",
+  "name": "youtube_live_info",
   "version": "1.0.0",
-  "description": "",
+  "description": "cronで実行し、YoutubeLiveの配信状況をJsonとしてダンプするプログラムのリポジトリです。",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,10 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "youtubei.js": "^6.4.1"
-  },
-  "devDependencies": {
-    "@types/node": "^20.8.4",
-    "dayjs": "^1.11.10"
+    "dayjs": "^1.11.11",
+    "puppeteer": "^22.9.0",
+    "youtubei.js": "^9.4.0"
   }
 }
